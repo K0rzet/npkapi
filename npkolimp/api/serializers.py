@@ -1,6 +1,6 @@
 from rest_framework import serializers
 from .models import Project, Product, News, CategoryProduct, CategoryProject, ComprehensiveEquipment, \
-    CategoryComplexEquipment, Image
+    CategoryComplexEquipment, Image, ContactFormSubmission
 
 
 class ImageSerializer(serializers.ModelSerializer):
@@ -55,3 +55,11 @@ class NewsSerializer(serializers.ModelSerializer):
     class Meta:
         model = News
         fields = '__all__'
+
+
+
+class ContactFormSubmissionSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = ContactFormSubmission
+        fields = '__all__'
+
