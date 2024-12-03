@@ -9,9 +9,9 @@ from rest_framework.pagination import LimitOffsetPagination
 from rest_framework.response import Response
 
 from .models import Project, Product, News, CategoryProduct, CategoryProject, ComprehensiveEquipment, \
-    CategoryComplexEquipment, Image
+    CategoryComplexEquipment, Image, ContactFormSubmission
 from .serializers import ProjectSerializer, ProductSerializer, NewsSerializer, CategoryProductSerializer, \
-    CategoryProjectSerializer, ComprehensiveEquipmentSerializer, ComprehensiveEquipmentCategorySerializer
+    CategoryProjectSerializer, ComprehensiveEquipmentSerializer, ComprehensiveEquipmentCategorySerializer, ContactFormSubmissionSerializer
 
 
 class ProductViewSet(viewsets.ModelViewSet):
@@ -19,7 +19,7 @@ class ProductViewSet(viewsets.ModelViewSet):
     serializer_class = ProductSerializer
     filter_backends = [DjangoFilterBackend, SearchFilter]
     filterset_fields = ['isNew', 'category']
-    search_fields = ['title', 'description']
+    search_fields = ['title']
     pagination_class = LimitOffsetPagination
 
     @action(detail=True, methods=['post'])
@@ -51,7 +51,7 @@ class ComprehensiveEquipmentViewSet(viewsets.ModelViewSet):
     queryset = ComprehensiveEquipment.objects.all()
     serializer_class = ComprehensiveEquipmentSerializer
     filter_backends = [DjangoFilterBackend, SearchFilter]
-    search_fields = ['title', 'description']
+    search_fields = ['title']
     filterset_fields = ['category']
 
     @action(detail=True, methods=['post'])
@@ -82,3 +82,18 @@ class CategoryProductViewSet(viewsets.ModelViewSet):
 class CategoryProjectViewSet(viewsets.ModelViewSet):
     queryset = CategoryProject.objects.all()
     serializer_class = CategoryProjectSerializer
+
+
+class ContactFormSubmissionViewSet(viewsets.ModelViewSet):
+    queryset = ContactFormSubmission.objects.all()
+    serializer_class = ContactFormSubmissionSerializer
+
+    def perform_create(self, serializer):
+        submission = serializer.save()
+        send_mail(
+            'New Contact Form Submission',
+            f'Name: {submission.name}\nEmail: {submission.email}\nPhone: {submission.phone}\nMessage: {submission.message}',
+            settings.DEFAULT_FROM_EMAIL,
+            [settings.DEFAULT_FROM_EMAIL],
+            fail_silently=False,
+        )
