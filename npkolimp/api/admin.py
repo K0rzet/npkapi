@@ -1,27 +1,12 @@
 from django.contrib import admin
 
 from .models import Product, CategoryProduct, CategoryProject, Project, News, ComprehensiveEquipment, \
-    CategoryComplexEquipment, Image
+    CategoryComplexEquipment, Image, ContactFormSubmission
 
 
 class ImageInline(admin.TabularInline):
     model = Image
     extra = 1
-
-    def get_queryset(self, request):
-        # Get the parent object (product, project, or equipment)
-        parent_obj = self.parent_model.objects.get(pk=self.parent_obj_id)
-        # Filter images based on the parent object
-        return super().get_queryset(request).filter(
-            product=parent_obj if isinstance(parent_obj, Product) else None,
-            project=parent_obj if isinstance(parent_obj, Project) else None,
-            equipment=parent_obj if isinstance(parent_obj, ComprehensiveEquipment) else None
-        )
-
-    def get_formset(self, request, obj=None, **kwargs):
-        # Save the parent object's ID for use in get_queryset
-        self.parent_obj_id = obj.id if obj else None
-        return super().get_formset(request, obj, **kwargs)
 
 class ProductAdmin(admin.ModelAdmin):
     inlines = [ImageInline]
@@ -62,3 +47,4 @@ admin.site.register(Project, ProjectAdmin)
 admin.site.register(News)
 admin.site.register(ComprehensiveEquipment, ComprehensiveEquipmentAdmin)
 admin.site.register(CategoryComplexEquipment, CategoryComplexEquipmentAdmin)
+admin.site.register(ContactFormSubmission)
