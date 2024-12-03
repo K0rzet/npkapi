@@ -25,7 +25,7 @@ SECRET_KEY = 'django-insecure-ro=o&0&k5kbbl#7r+)o-7!(6u90lhzbo(x97h#&4ijy5)@o+=-
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
 
-ALLOWED_HOSTS = ['npkolimp.std-2131.ist.mospolytech.ru', '127.0.0.1', 'localhost', 'npkolimpapi.std-2131.ist.mospolytech.ru']
+ALLOWED_HOSTS = ['api.npkolimp.com', 'npkolimp.com']
 
 
 # Application definition
