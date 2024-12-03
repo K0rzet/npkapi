@@ -4,7 +4,7 @@ from django.urls import path, include
 from rest_framework.routers import DefaultRouter
 
 from .views import ProductViewSet, ProjectViewSet, NewsViewSet, CategoryProductViewSet, \
-    CategoryProjectViewSet, ComprehensiveEquipmentViewSet, ComprehensiveEquipmentCategoryViewSet
+    CategoryProjectViewSet, ComprehensiveEquipmentViewSet, ComprehensiveEquipmentCategoryViewSet, ContactFormSubmissionViewSet
 
 router = DefaultRouter()
 router.register(r'products', ProductViewSet, basename='product')
@@ -14,6 +14,7 @@ router.register(r'category-product', CategoryProductViewSet, basename='category-
 router.register(r'category-project', CategoryProjectViewSet, basename='category-project')
 router.register(r'comprehensive-equipment', ComprehensiveEquipmentViewSet, basename='comprehensive-equipment')
 router.register(r'comprehensive-equipment-category', ComprehensiveEquipmentCategoryViewSet, basename='comprehensive-equipment-category')
+router.register(r'contact', ContactFormSubmissionViewSet)
 
 
 urlpatterns = [
